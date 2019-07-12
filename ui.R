@@ -3,13 +3,23 @@ library(plotly)
 library(ggplot2)
 library(shinyBS)
 library(magic)
+library(shinyjs)
 source("HelperFunctionsJH.R")
 options(shiny.sanitize.errors = FALSE)
 
 #, local=TRUE
 # Define UI for application that draws a histogram
 shinyUI(fluidPage(
- 
+  #hides momentary flashing red errors while working 
+  tags$style(type="text/css",
+             
+             ".shiny-output-error { visibility: hidden; }",
+             
+             ".shiny-output-error:before { visibility: hidden; }"
+             
+  ),
+  
+  useShinyjs(),
   # Application title
   titlePanel("The Shiny CRT Calculator: Power and Sample size for Cluster Randomised Trials"),
   
@@ -131,7 +141,9 @@ shinyUI(fluidPage(
   
      ##Varying cluster sizes
      conditionalPanel(
-      condition= "input.choice2!='Upload matrix' & input.choice_corr=='exch'", 
+    ##July 2017 edit to correct mistake that allows user to select varying cluster sizes for a wider range of designs
+    # condition= "input.choice2!='Upload matrix' & input.choice_corr=='exch'", 
+      condition= "input.choice2!='Upload matrix' | input.choice_corr!='dtd'", 
       radioButtons(inputId="varyingclustersizes",
                    label = "Allowance for varying cluster sizes", 
                    choices = c("No", "Yes")),
@@ -143,9 +155,9 @@ shinyUI(fluidPage(
                   max = 4, 
                   value = 0,
                   step= 0.01),
-      helpText("Ratio of variance of cluster sizes to mean of cluster sizes.")
+      helpText("Ratio of standard deviation of cluster sizes to mean of cluster sizes.")
     )
-     ),
+    ),
     
     
     ##Trade-off for fixed power without differential clustering
@@ -450,6 +462,7 @@ shinyUI(fluidPage(
 #Plot of power vs cluster size
 #By cluster size 
     mainPanel(
+      style="position:fixed;margin-left:32vw;",
       conditionalPanel(
       condition = "input.choice4=='Determine cluster size'  && input.choice2=='Parallel' && input.choice_corr=='exch' ||input.choice4=='Determine cluster size'  && input.choice5=='True' ", 
       tabsetPanel(

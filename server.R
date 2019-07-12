@@ -17,6 +17,7 @@ shinyServer(function(input, output, session) {
   output$tA <-renderText({ 
     paste("Number of periods:", input$T)
   })
+ 
   output$cvA <-renderText({ 
     paste("Coefficient of variation of cluster sizes:", input$cv)
   })
@@ -425,7 +426,7 @@ shinyServer(function(input, output, session) {
   })
   
 ###Set up restrictions  
- #Restrict correlaion structures for two period designs 
+ #Restrict correlation structures for two period designs 
   observeEvent(input$choice2,{
     if(input$choice2=="Cross-over" || input$choice2=="Before and After"){
       updateRadioButtons(session, "choice_corr",
@@ -434,6 +435,16 @@ shinyServer(function(input, output, session) {
                          choiceValues = c("exch", "clusbytime"))
     }}                    
   )
+  
+  observeEvent(input$choice_corr,{
+   reset("cv")
+    }                    
+  )
+  observeEvent(input$choice2,{
+    reset("choice5")
+  }                    
+  )
+  
  #Unrestrict correlation structure for other designs 
   observeEvent(input$choice2,{
     if(input$choice2=="Stepped-wedge" || input$choice2=="Multi cross-over" || input$choice2=="Parallel" || input$choice2=="Upload matrix" ){
@@ -993,6 +1004,7 @@ shinyServer(function(input, output, session) {
 #Discrete time decay correlation  
 
   CurrentDataDECAY <- reactive({
+    
     #Defaults
     cv<-0
     cac<-1
@@ -1168,7 +1180,7 @@ shinyServer(function(input, output, session) {
   #When user uploads design matrix 
   CurrentDataDESMAT <- eventReactive(input$button1,{
     #Defaults 
-    cv<-1
+    cv<-0
     cac<-1
     cac_l<-1
     cac_u<-1
@@ -1695,10 +1707,11 @@ shinyServer(function(input, output, session) {
     
     #3D plot for trade-off when differential clustering
     output$TradeoffPlot_parallel_d <- renderPlotly({
-      p_tradeoff_parallel_d<-plot_ly(CurrentData(),x=~xtmp, y=~no_clusters_x, z=~precision_x, type='scatter3d', mode='lines',name="Base ICC",line = list(color = "black", width = 4), hoverinfo="text", text = ~paste0("Number clusters treatment: ", xtmp, ";  Number clusters control: ", no_clusters_x)) %>%
-      add_trace(x=~xtmp, y=~no_clusters_l, z=~no_clusters_cl, name="Lower ICC", line = list(color = 'rgb(205, 12, 24)', width = 4), hoverinfo="text", text = ~paste0("Number clusters treatment: ", xtmp, ";  Number clusters control: ", no_clusters_l, "; TSS: ", precision_x)) %>%
-      add_trace(x=~xtmp, y=~no_clusters_u, z=~no_clusters_cu, name="Upper ICC", line = list(color = 'rgb(22, 96, 167)', width = 4), hoverinfo="text", text = ~paste0("Number clusters treatment: ", xtmp, ";  Number clusters control: ", no_clusters_u, "; TSS: ", precision_x)) %>%
-      layout(scene=list(yaxis=list(title="No. clusters control",titlefont=list(size=8)),xaxis=list(title="No. clusters treatment",titlefont=list(size=8)), zaxis=list(title="TSS",titlefont=list(size=8))))
+      p_tradeoff_parallel_d<-plot_ly(CurrentData(),x=~xtmp, y=~no_clusters_x, z=~precision_x, type='scatter3d', mode='lines',name="Base ICC",line = list(color = "black", width = 4), hoverinfo="text", text = ~paste0("Number clusters treatment: ", xtmp, ";  Number clusters control: ", no_clusters_x, ";TSS: ", precision_x)) %>%
+      #Updated to remove lower and upper ICC curves as this made plot very difficult to read
+      #add_trace(x=~xtmp, y=~no_clusters_l, z=~no_clusters_cl, name="Lower ICC", line = list(color = 'rgb(205, 12, 24)', width = 4), hoverinfo="text", text = ~paste0("Number clusters treatment: ", xtmp, ";  Number clusters control: ", no_clusters_l, "; TSS: ", precision_x)) %>%
+      #add_trace(x=~xtmp, y=~no_clusters_u, z=~no_clusters_cu, name="Upper ICC", line = list(color = 'rgb(22, 96, 167)', width = 4), hoverinfo="text", text = ~paste0("Number clusters treatment: ", xtmp, ";  Number clusters control: ", no_clusters_u, "; TSS: ", precision_x)) %>%
+      layout(scene=list(yaxis=list(title="No. control",titlefont=list(size=12),color = 'rgb(205, 12, 24)'),xaxis=list(title="No. clusters treatment",titlefont=list(size=12),color = 'rgb(22, 96, 167)'), zaxis=list(title="TSS",titlefont=list(size=12))))
     })
     
    ##Trade off plots other (axis is cluster size per period)  

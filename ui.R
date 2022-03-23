@@ -440,7 +440,7 @@ shinyUI(fluidPage(
                choiceNames = c("Normal approximation", "T-distribution"),
                 choiceValues = c("True", "False")
           ),
-     helpText("The t-distrubution option should be selected if small sample corrections are intended to be used at the analysis stage. Degrees of freedom used are number of cluster-periods minus number clusters minus number periods.")
+     helpText("NOTE MARCH 2022 THE T-DISTRIBUTION OPTION IS NOTED AS NOT WORKING PROPERLYThe t-distrubution option should be selected if small sample corrections are intended to be used at the analysis stage. Degrees of freedom used are number of cluster-periods minus number clusters minus number periods.")
           ),
     
     ###Buttons

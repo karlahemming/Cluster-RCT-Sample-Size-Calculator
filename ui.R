@@ -30,8 +30,8 @@ shinyUI(fluidPage(
                    label = "Trial Design", 
                    choiceNames = c("Parallel", "Parallel with baseline measure", "Two-period cross-over", "Stepped-wedge" , "Multiple-period cross-over", "Upload own design"),
                    choiceValues = c("Parallel", "Before and After", "Cross-over", "Stepped-wedge" , "Multi cross-over", "Upload matrix")),
-      bsTooltip("choice2","A parallel design randomly allocates clusters to one of two treatment arms; a parallel design with baseline measures includes an additional period of observation in which all clusters are observed in the control condition; a two-period cross-over trial randomly allocates clusters to one of two sequences (control followed by intervention, or intervention followed by control); a multi-period cross over trial has multiple cross-overs between two treatment conditions; a longitudinal parallel design randomly allocates clusters to one of two arms, and takes repeated measures over time.","bottom"),
-      helpText("A non standard design can be accommodated by uploading the design as a CSV file (click on the up-load option for more details)."),
+      bsTooltip("choice2","A parallel design randomly allocates clusters to one of two treatment arms; a parallel design with baseline measures includes an additional period of observation in which all clusters are observed in the control condition; a two-period cross-over trial randomly allocates clusters to one of two sequences (control followed by intervention, or intervention followed by control); a multi-period cross over trial has multiple cross-overs between two treatment conditions.","bottom"),
+      helpText("A non standard design can be accommodated by uploading the design as a CSV file (click on the up-load option for more details). After uploading, click “create curve (end of page) to generate the curves"),
       conditionalPanel(
         condition = "input.choice2=='Upload matrix'",
         fileInput("file1", "Upload a design matrix:", accept=c('text/plain', '.csv')),
@@ -44,7 +44,7 @@ shinyUI(fluidPage(
                      choiceValues = c("Cross-sectional", "Cohort"),
                      choiceNames = c("Cross-sectional sample", "Cohort")
                      ),
-        helpText("In a cross-sectional design at each measurement occasion a different sample of participants is measured. In a cohort design, participants are repeatidly measured at each measurement occasion. "),
+        helpText("In a cross-sectional design at each measurement occasion a different sample of participants is measured. In a cohort design, participants are repeatedly measured at each measurement occasion. "),
   
   #Correlation structure 
     radioButtons(inputId="choice_corr",
@@ -514,7 +514,7 @@ shinyUI(fluidPage(
       p("Hooper R, Bourke L. Cluster randomised trials with repeated cross sections:
                  alternatives to parallel group designs. BMJ. 2015 Jun 8;350:h2925. doi:
                  10.1136/bmj.h2925. PubMed PMID: 26055828."),
-      h2("Acknowedgements"),
+      h2("Acknowledgements"),
       h6("Karla Hemming is part funded by the NIHR CLAHRC West Midlands+ initiative. This paper presents independent research and the views expressed are those of the author(s) and not necessarily those of the NHS, the NIHR or the Department of Health.")
       ))),
       
@@ -569,7 +569,7 @@ shinyUI(fluidPage(
           tabPanel("Design matrix", h4(tableOutput("DesignmatrixDispNP")), h6("Design matrix (displayed with one cluster per treatment sequence only)")),
           tabPanel("References and Contacts", 
                    h3("References and Contacts"),
-                   p("This function has been written by Karla Hemming University of Birmingham UK; Jesica Kasza Monash University Australia; and with input from Jim Hughes, Washington University USA. Please email k.hemming@bham.ac.uk if you spot any bugs, errors or have any feedback"),
+                   p("This function has been written by Karla Hemming University of Birmingham UK; Jessica Kasza Monash University Australia; and with input from Jim Hughes, Washington University USA. Please email k.hemming@bham.ac.uk if you spot any bugs, errors or have any feedback"),
                    p("Hooper R, Teerenstra S, de Hoop E, Eldridge S. Sample size calculation for
                      stepped wedge and other longitudinal cluster randomised trials. Stat Med. 2016
                      Nov 20;35(26):4718-4728. doi: 10.1002/sim.7028. Epub 2016 Jun 28. PubMed PMID:

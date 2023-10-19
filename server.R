@@ -1540,8 +1540,9 @@ shinyServer(function(input, output, session) {
            layout(xaxis=list(title="Number of clusters (per arm / sequence)"),yaxis=list(title="Power"))
      }
      #Fix issue on 27th Feb 2019
+     #fix issue (Oct 2023) related to "ignores variable cluster size when graphing Number of clusters per sequence vs Power with 2-period decay"
      else if (input$choice_corr=="clusbytime" && input$choice2!="Upload matrix") {
-       p_powerbynoclusters_bysequence<-plot_ly(CurrentDataDECAY(),x=~xtmp, y=~power_x,type='scatter',mode='lines', name="Base ICC; Base CAC", line = list(color = "black", width = 4), hoverinfo="text", text = ~paste0("Clusters per sequence: ", xtmp, ";  Power: ", power_x)) %>%
+       p_powerbynoclusters_bysequence<-plot_ly(CurrentData(),x=~xtmp, y=~power_x,type='scatter',mode='lines', name="Base ICC; Base CAC", line = list(color = "black", width = 4), hoverinfo="text", text = ~paste0("Clusters per sequence: ", xtmp, ";  Power: ", power_x)) %>%
          add_lines(y=~power_x_l, name="Lower ICC; Base CAC",line = list(color = 'rgb(205, 12, 24)', width = 4), hoverinfo="text", text = ~paste0("Clusters per sequence: ", xtmp, ";  Power: ", power_x_l) ) %>%
          add_lines(y=~power_x_u, name="Upper ICC; Base CAC", line = list(color = 'rgb(22, 96, 167)', width = 4), hoverinfo="text", text = ~paste0("Clusters per sequence: ", xtmp, ";  Power: ", power_x_u)) %>%
          add_lines(y=~power_x_cl, name="Base ICC; Lower CAC",line = list(color = 'rgb(205, 12, 24)', width = 4, dash = 'dash'), hoverinfo="text", text = ~paste0("Clusters per sequence: ", xtmp, ";  Power: ", power_x_cl)) %>%

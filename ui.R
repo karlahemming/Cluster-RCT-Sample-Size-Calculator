@@ -142,8 +142,9 @@ shinyUI(fluidPage(
      ##Varying cluster sizes
      conditionalPanel(
     ##July 2017 edit to correct mistake that allows user to select varying cluster sizes for a wider range of designs
-    # condition= "input.choice2!='Upload matrix' & input.choice_corr=='exch'", 
-      condition= "input.choice2!='Upload matrix' | input.choice_corr!='dtd'", 
+    # condition= "input.choice2!='Upload matrix' & input.choice_corr=='exch'",
+    # Oct 2023 do not display "Varying cluster size" option for user uploaded matrix as it is not an option
+      condition= "input.choice2!='Upload matrix' & input.choice_corr!='dtd'", 
       radioButtons(inputId="varyingclustersizes",
                    label = "Allowance for varying cluster sizes", 
                    choices = c("No", "Yes")),

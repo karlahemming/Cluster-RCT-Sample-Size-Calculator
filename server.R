@@ -787,7 +787,6 @@ shinyServer(function(input, output, session) {
       xtmp<-c(kmin:kmax)
       #dof<-(xtmp*t*s)-(t+xtmp)
       dof<-(xtmp*s)-t-1
-      print(dof)
       #Normal distribution
       if(input$choice6== "True"){
         power2=function(x){pnorm(sqrt(s*t*x*m*(es^2)/(4*de_clustering(m)*de_repeated(m)))-qnorm(1-a/2))}
@@ -869,7 +868,6 @@ shinyServer(function(input, output, session) {
     #dof<-(xtmp*s)-t-1
     # Oct 2023 change the dof
     dof<-(k*s*t)-t-1
-    print(dof)
     #Normal approximation 
     if(input$choice6=="True"){
     precision =function(x){(s*t*x*k)/(4*sigma^2*de_clustering(x)*de_repeated(x))} 

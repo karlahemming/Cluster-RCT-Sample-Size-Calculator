@@ -31,7 +31,7 @@ shinyUI(fluidPage(
                    choiceNames = c("Parallel", "Parallel with baseline measure", "Two-period cross-over", "Stepped-wedge" , "Multiple-period cross-over", "Upload own design"),
                    choiceValues = c("Parallel", "Before and After", "Cross-over", "Stepped-wedge" , "Multi cross-over", "Upload matrix")),
       bsTooltip("choice2","A parallel design randomly allocates clusters to one of two treatment arms; a parallel design with baseline measures includes an additional period of observation in which all clusters are observed in the control condition; a two-period cross-over trial randomly allocates clusters to one of two sequences (control followed by intervention, or intervention followed by control); a multi-period cross over trial has multiple cross-overs between two treatment conditions.","bottom"),
-      helpText("A non standard design can be accommodated by uploading the design as a CSV file (click on the up-load option for more details). After uploading, click “create curve (end of page) to generate the curves"),
+      helpText("A non standard design can be accommodated by uploading the design as a CSV file (click on the up-load option for more details). After uploading, click 'create curve' (end of page) to generate the curves"),
       conditionalPanel(
         condition = "input.choice2=='Upload matrix'",
         fileInput("file1", "Upload a design matrix:", accept=c('text/plain', '.csv')),
